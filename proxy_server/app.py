@@ -62,5 +62,21 @@ def index():
         s.close()
         return jsonify(resp)
 
+@app.route("/upi", methods = ["POST"], endpoint = "upimachine")
+@cross_origin()
+def index():
+    if request.method == "POST":
+        port = 3003
+        data = request.json
+
+        s = socket.socket()
+        s.connect(("127.0.0.1",port))
+        s.send(json.dumps(data).encode())
+        resp = s.recv(1024).decode()
+        resp = json.loads(resp)
+        print(resp)
+        s.close()
+        return jsonify(resp)
+
 if __name__ == "__main__":
     app.run(debug=True)

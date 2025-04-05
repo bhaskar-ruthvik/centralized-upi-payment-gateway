@@ -1,19 +1,19 @@
 import socket			 
 import json
-from utils import retrieve_from_database, register_user, user_login, get_shaid, register_merchant, merchant_login
+from utils import *
 import time
 available_banks = [
     {
-        "bank_name": "HSBC",
-        "ifsc_code": "HSBCI000101"
+        "bank_name": "HDFC",
+        "ifsc_code": "HDFCI000101"
     },
     {
-        "bank_name": "HSBC",
-        "ifsc_code": "HSBCI000102"
+        "bank_name": "HDFC",
+        "ifsc_code": "HDFCI000102"
     },
     {
-        "bank_name": "HSBC",
-        "ifsc_code": "HSBCI000103"
+        "bank_name": "HDFC",
+        "ifsc_code": "HDFCI000103"
     },
     {
         "bank_name": "ICICI",
@@ -43,6 +43,7 @@ available_banks = [
 
 merchants = []
 users = []
+ledger = read_ledger("database/chain_ledger.json")
 s = socket.socket()		 
 print ("Socket successfully created")
 port = 12345			
@@ -72,8 +73,8 @@ while True:
     #print(resp)
     resp = json.loads(resp.split("\r\n\r")[-1])
     print(resp)
-    if resp["id"] == "5":
-        c.send(json.dumps({"id":"5"}).encode())
+    if resp["id"] == "10":
+        c.send(json.dumps({"id":"10"}).encode())
         c.close()
         break
     elif resp["id"] == "1":
@@ -81,7 +82,7 @@ while True:
         resp["data"]["MID"] = mid 
         register_merchant("database/merchants.txt",json.dumps(resp["data"]))
         c.send(json.dumps({"id": 1, "data": "Registration Complete"}).encode("UTF-8"))
-    elif resp["id"] == "2":
+    elif resp["id"] == "2": # Not a useful operation as login is not required
         stat = merchant_login(resp["data"]["name"],resp["data"]["password"],merchants)
         if stat == 1:
             c.send(json.dumps({"id": 2, "data": "Login Successful"}).encode())
@@ -94,12 +95,35 @@ while True:
         resp["data"]["MMID"] = mmid
         register_user("database/users.txt",json.dumps(resp["data"]))
         c.send(json.dumps({"id": "3", "data": "Registration Complete"}).encode("UTF-8"))
-    elif resp["id"]=="4":
+    elif resp["id"]=="4": # Not a useful operation as login is not required
         stat = user_login(resp["data"]["name"],resp["data"]["password"],users)
         if stat == 1:
             c.send(json.dumps({"id": "4", "data": "Login Successful"}).encode())
         else:
             c.send(json.dumps({"id": "4", "data": "Login Failed"}).encode())
+    elif resp["id"]=="5":
+        # Decrypt the user information
+        user_data = decrypt_hashdata(resp["data"]["user_data"])
+        # Validate all the user information
+        merchant_valid, merchant = validate_merchant(resp["data"]["MID"],merchants)
+        if merchant_valid == 1:
+            user_valid, user = validate_user(user_data, users)
+            print("User Valid: ", user_valid)
+            if user_valid == 1:
+                merchant["Amount in Account"] = str(float(merchant["Amount in Account"]) + float(user_data["Amount"]))
+                # Add to Blockchain if the transaction is successful
+                transaction = create_transaction_block(user["UID"], resp["data"]["MID"], user_data["Amount"])
+                add_transaction(ledger, transaction)
+                write_to_ledger(ledger, "database/chain_ledger.json")
+                update_amount_in_db(merchant["MID"],merchant["Amount in Account"],merchants)
+                write_to_db("database/users.txt",users)
+                write_to_db("database/merchants.txt",merchants)
+                c.send(json.dumps({"id": "5", "data": "Transaction Successful"}).encode())
+            else:
+                c.send(json.dumps({"id": "5", "data": "Transaction Failed"}).encode())
+        
+    
+        # Send the status back to UPI machine
     # Close the connection with the client 
     c.close()
 

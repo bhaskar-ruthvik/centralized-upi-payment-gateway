@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function MerchantRegistration() {
+function TransactionPage() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [ifsc,setIfsc] = useState("")
@@ -9,12 +9,14 @@ function MerchantRegistration() {
   const navigate = useNavigate()
   async function RegisterUser(username, password, ifsc_code, amount_in_acc){
     const data = {
-      "id": "1",
+      "id": "5",
       "data": {
-        "name": username,
-        "password": password,
-        "IFSC Code": ifsc_code,
-        "Amount in Account": amount_in_acc,
+        "VMID": username,
+        "user_data": {
+            "Amount": amount_in_acc,
+            "PIN": password,
+            "MMID": ifsc_code
+        }
       }
     }
     let fetchData = {
@@ -26,7 +28,7 @@ function MerchantRegistration() {
     }
   
 
-    const resp = await fetch('http://127.0.0.1:5000/bank_laptop',fetchData);
+    const resp = await fetch('http://127.0.0.1:5000/upi',fetchData);
     const respjson = await resp.json();
     console.log(respjson)
     if (respjson["data"] === "Registration Complete"){
@@ -41,29 +43,29 @@ function MerchantRegistration() {
     <div className="p-[25vh]">
  
    <div className="flex items-center content-center justify-center pb-4">
-    <h1 className="text-3xl font-sans font-bold justify-center text-white">🧑‍💼Merchant Registration</h1>
+    <h1 className="text-3xl font-sans font-bold justify-center text-white">👨‍🦱Make a Payment</h1>
     </div>
       <div className="flex items-center content-center justify-center pt-8 pb-4">
       <div className="bg-slate-200 p-2 rounded-xl">
-      <input className="bg-transparent placeholder:text-black focus:outline-none" placeholder="Name" onChange={(name)=>{setUsername(name.target.value)}}></input>
+      <input className="bg-transparent placeholder:text-black focus:outline-none" placeholder="VMID" onChange={(name)=>{setUsername(name.target.value)}}></input>
       </div>
       </div>
 
       <div className="flex items-center content-center justify-center pt-1 pb-4">
       <div className="bg-slate-200 p-2 rounded-xl">
-      <input className="bg-transparent placeholder:text-black focus:outline-none" placeholder="IFSC Code" onChange={(name)=>{setIfsc(name.target.value)}}></input>
+      <input className="bg-transparent placeholder:text-black focus:outline-none" placeholder="MMID" onChange={(name)=>{setIfsc(name.target.value)}}></input>
       </div>
       </div>
 
       <div className="flex items-center content-center justify-center pt-1 pb-4">
       <div className="bg-slate-200 p-2 p rounded-xl">
-      <input className="bg-transparent placeholder:text-black focus:outline-none" placeholder="Amount in Account" onChange={(name)=>{setAmt(name.target.value)}}></input>
+      <input className="bg-transparent placeholder:text-black focus:outline-none" placeholder="Amount" onChange={(name)=>{setAmt(name.target.value)}}></input>
       </div>
       </div>
 
       <div className="flex items-center content-center justify-center pb-10 pt-1">
       <div className="bg-slate-200 p-2 rounded-xl">
-      <input className="bg-transparent placeholder:text-black focus:outline-none" type="password" placeholder="Password" onChange={(pwd)=>{setPassword(pwd.target.value)}}></input>
+      <input className="bg-transparent placeholder:text-black focus:outline-none" type="password" placeholder="PIN" onChange={(pwd)=>{setPassword(pwd.target.value)}}></input>
       </div>
       </div>
 
@@ -78,4 +80,4 @@ function MerchantRegistration() {
   );
 }
 
-export default MerchantRegistration;
+export default TransactionPage;

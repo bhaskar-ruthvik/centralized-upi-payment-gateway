@@ -1,4 +1,4 @@
 { "name": "user", "password": "password", "IFSC Code": "SBINOOO302", "Amount in Account": "25.00", "UID": "48757c58568849aa", "PIN": "123456", "Mobile Number": "1234565789", "MMID": "68225188b4cae85a"}
 {"name": "ruthvik", "password": "helloworld123", "IFSC Code": "SBIIN000301", "Amount in Account": "48.00", "UID": "465576d6c3469edb", "PIN": "112233", "Mobile Number": "9485034398", "MMID": "14d21a759a6a6e45"}
 {"name": "bhaskarruthvik", "password": "passwordpassword", "IFSC Code": "ICICI000201", "Amount in Account": "300.00", "PIN": "234789", "Mobile Number": "7485934095", "UID": "5b85f5d5bbac5a2d", "MMID": "e67d706cd9989d95"}
-{"name": "Abhishek", "password": "aforapple", "IFSC Code": "HSBCI000101", "Amount in Account": "4000.00", "PIN": "465987", "Mobile Number": "5674934903", "UID": "752df566f5977ec9", "MMID": "c6b056825419e22c"}
+{"name": "Abhishek", "password": "aforapple", "IFSC Code": "HSBCI000101", "Amount in Account": "3000.0", "PIN": "465987", "Mobile Number": "5674934903", "UID": "752df566f5977ec9", "MMID": "c6b056825419e22c"}
