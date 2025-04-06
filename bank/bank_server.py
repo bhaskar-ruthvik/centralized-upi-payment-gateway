@@ -103,9 +103,12 @@ while True:
             c.send(json.dumps({"id": "4", "data": "Login Failed"}).encode())
     elif resp["id"]=="5":
         # Decrypt the user information
-        user_data = decrypt_hashdata(resp["data"]["user_data"])
+        user_data = json.loads(decrypt("This is the key",resp["data"]["user_data"]))
+        print(user_data)
         # Validate all the user information
         merchant_valid, merchant = validate_merchant(resp["data"]["MID"],merchants)
+        print("Merchant Valid: ", merchant_valid)
+        print(merchant)
         if merchant_valid == 1:
             user_valid, user = validate_user(user_data, users)
             print("User Valid: ", user_valid)
@@ -118,8 +121,10 @@ while True:
                 update_amount_in_db(merchant["MID"],merchant["Amount in Account"],merchants)
                 write_to_db("database/users.txt",users)
                 write_to_db("database/merchants.txt",merchants)
+                print("Success")
                 c.send(json.dumps({"id": "5", "data": "Transaction Successful"}).encode())
             else:
+                print("Fail")
                 c.send(json.dumps({"id": "5", "data": "Transaction Failed"}).encode())
         
     

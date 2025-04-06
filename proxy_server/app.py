@@ -2,8 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 import socket		
 import json	 
-
-
+from utils import encrypt, decrypt
 
 app = Flask(__name__)
 cors = CORS(app) # allow CORS for all domains on all routes.
@@ -68,7 +67,8 @@ def index():
     if request.method == "POST":
         port = 3003
         data = request.json
-
+        if data["id"]=="5":
+            data["data"]["user_data"] = encrypt("This is the key", json.dumps(data["data"]["user_data"]))
         s = socket.socket()
         s.connect(("127.0.0.1",port))
         s.send(json.dumps(data).encode())

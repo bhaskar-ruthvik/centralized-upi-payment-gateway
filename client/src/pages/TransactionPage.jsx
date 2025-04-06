@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function TransactionPage() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [ifsc,setIfsc] = useState("")
   const [amt,setAmt] = useState("")
-  const navigate = useNavigate()
+  const [active, setActive] = useState(false)
+  const [success,setSuccess] = useState(true)
   async function RegisterUser(username, password, ifsc_code, amount_in_acc){
     const data = {
       "id": "5",
@@ -31,10 +31,15 @@ function TransactionPage() {
     const resp = await fetch('http://127.0.0.1:5000/upi',fetchData);
     const respjson = await resp.json();
     console.log(respjson)
-    if (respjson["data"] === "Registration Complete"){
+    if (respjson["data"] === "Transaction Successful"){
+     
+      setSuccess(true)
+      setActive(true)
         return 1;
     }
     else{
+      setSuccess(false)
+      setActive(true)
         return 0;
     }
 
@@ -43,7 +48,7 @@ function TransactionPage() {
     <div className="p-[25vh]">
  
    <div className="flex items-center content-center justify-center pb-4">
-    <h1 className="text-3xl font-sans font-bold justify-center text-white">👨‍🦱Make a Payment</h1>
+    <h1 className="text-3xl font-sans font-bold justify-center text-white">💵Make a Payment</h1>
     </div>
       <div className="flex items-center content-center justify-center pt-8 pb-4">
       <div className="bg-slate-200 p-2 rounded-xl">
@@ -70,9 +75,17 @@ function TransactionPage() {
       </div>
 
       <div className="flex items-center content-center justify-center">
-      <button type="button" className="bg-orange-500 text-white px-3 py-2 rounded-lg" onClick={async ()=>{const resp = await RegisterUser(username, password,ifsc,amt); if(resp===1){navigate('/merchantdashboard')}}}>Register</button>
+      <button type="button" className="bg-orange-500 text-white px-3 py-2 rounded-lg" onClick={async ()=>{RegisterUser(username, password,ifsc,amt)}}>Make Payment</button>
       </div>
-  
+      {active && 
+       (success ? ( <div className="flex items-center content-center justify-center pt-10">
+          <h1 className="text-3xl font-sans font-bold justify-center text-green-400">✅ Transaction Complete</h1>
+        </div>) : (
+          <div className="flex items-center content-center justify-center pt-10">
+          <h1 className="text-3xl font-sans font-bold justify-center text-red-400">❌ Transaction Failed</h1>
+        </div>
+        
+      ))}
     
      
      

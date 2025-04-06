@@ -1,7 +1,6 @@
 import UserLogin from "./pages/UserLogin";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css'
-import UserDashboard from "./pages/UserDashboard";
 import MerchantLogin from "./pages/MerchantLogin";
 import MerchantDashboard from "./pages/MerchantDashboard";
 import UserRegistration from "./pages/UserRegistration";
@@ -17,7 +16,6 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/payment" element={<TransactionPage />}></Route>
         <Route path="/userlogin" element={<UserLogin />}></Route>
-        <Route path="/userdashboard" element={<UserDashboard />}></Route>
         <Route path="/userregister" element={<UserRegistration/>}></Route>
         <Route path="/merchantlogin" element={<MerchantLogin />}></Route>
         <Route path="/merchantdashboard" element={<MerchantDashboard />}></Route>

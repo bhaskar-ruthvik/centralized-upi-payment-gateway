@@ -87,7 +87,7 @@ function UserRegistration() {
       </div>
 
       <div className="flex items-center content-center justify-center">
-      <button type="button" className="bg-orange-500 text-white px-3 py-2 rounded-lg" onClick={async ()=>{const resp = await RegisterUser(username, password,ifsc,pin,mob,amt); if(resp===1){navigate('/userdashboard')}}}>Register</button>
+      <button type="button" className="bg-orange-500 text-white px-3 py-2 rounded-lg" onClick={async ()=>{const resp = await RegisterUser(username, password,ifsc,pin,mob,amt); if(resp===1){navigate('/payment')}}}>Register</button>
       </div>
   
     
