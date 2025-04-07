@@ -20,7 +20,8 @@ def index():
         s = socket.socket()		
         s.connect(('127.0.0.1', port)) 
         s.send(json.dumps(data).encode())
-        resp = s.recv(1024).decode()
+        resp = s.recv(4096).decode()
+        print(resp)
         resp = json.loads(resp)
         print(resp)
         s.close()	 
@@ -30,7 +31,7 @@ def index():
 @cross_origin()
 def index():
     if request.method == "POST":
-        port = 3002
+        port = 3003
         data = request.json
 
         s = socket.socket()
@@ -49,7 +50,7 @@ def index():
 @cross_origin()
 def index():
     if request.method == "POST":
-        port = 3001
+        port = 3003
         data = request.json
 
         s = socket.socket()

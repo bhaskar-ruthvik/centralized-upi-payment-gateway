@@ -45,5 +45,14 @@ while True:
         ciphertext = speck_encrypt(plaintext, round_keys)
         file_name = generate_qr_code(ciphertext, mid)
         c.send(json.dumps({"id": "6","data": { "status": "QR Generated Successfully", "file_name": file_name}}).encode())
+    elif resp["id"]=="1"  or resp["id"]=="3":
+        t = socket.socket()
+        t.connect(('127.0.0.1', bank_port))
+        t.send(json.dumps(resp).encode())
+        resp = t.recv(1024).decode()
+        resp = json.loads(resp)
+        print(resp)
+        c.send(json.dumps(resp).encode())
+        t.close()
     c.close()
 

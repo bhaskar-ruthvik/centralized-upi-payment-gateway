@@ -126,7 +126,13 @@ while True:
             else:
                 print("Fail")
                 c.send(json.dumps({"id": "5", "data": "Transaction Failed"}).encode())
+    elif resp["id"]=="7":
+        data = {}
+        with open("database/chain_ledger.json","r") as f:
+            data = json.loads(f.read())
         
+        c.send(json.dumps({"id": "7", "data": data}).encode())
+
     
         # Send the status back to UPI machine
     # Close the connection with the client 

@@ -15,6 +15,11 @@ export default function Home(){
    
     </div>
     <div className="flex items-center content-center justify-center pt-2 pb-4">
+    <div className="bg-slate-200 p-2 rounded-xl" onClick={()=>{navigate('/transactions')}}>
+   <h1 className="font-bold">See Transactions - Blockchain</h1>
+    </div>
+    </div>
+    <div className="flex items-center content-center justify-center pt-2 pb-4">
     <div className="bg-slate-200 p-2 rounded-xl" onClick={()=>{navigate('/merchantregister')}}>
    <h1 className="font-bold">Merchant Register</h1>
     </div>
@@ -29,6 +34,7 @@ export default function Home(){
     <div className="bg-slate-200 p-2 rounded-xl" onClick={()=>{navigate('/merchantdashboard')}}>
    <h1 className="font-bold">Generate QR Code</h1>
     </div>
+    
     </div>
   
    

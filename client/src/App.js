@@ -7,6 +7,7 @@ import UserRegistration from "./pages/UserRegistration";
 import MerchantRegistration from "./pages/MerchantRegistration";
 import Home from "./pages/Home";
 import TransactionPage from "./pages/TransactionPage";
+import Transactions from "./pages/Transactions";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/payment" element={<TransactionPage />}></Route>
+        <Route path="/transactions" element={<Transactions />}></Route>
         <Route path="/userlogin" element={<UserLogin />}></Route>
         <Route path="/userregister" element={<UserRegistration/>}></Route>
         <Route path="/merchantlogin" element={<MerchantLogin />}></Route>
