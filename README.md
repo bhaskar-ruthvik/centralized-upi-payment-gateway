@@ -19,6 +19,7 @@ This is the term project for BITS F463: Cryptography. It is a simplified impleme
 - 4: Login User
 - 5: User Transaction
 - 6: QR Code Generation
+- 7: See Blockchain Ledger
 
 ## Installation
 1. Download the `.zip` file and extract the contents
