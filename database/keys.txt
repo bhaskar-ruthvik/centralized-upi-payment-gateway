@@ -1,0 +1,5 @@
+{"MMID": "68225188b4cae85a", "private_key": "(27,55)", "public_key": "(3,55)"}
+{"MMID": "14d21a759a6a6e45", "private_key": "(27,55)", "public_key": "(3,55)"}
+{"MMID": "e67d706cd9989d95", "private_key": "(27,55)", "public_key": "(3,55)"}
+{"MMID": "c6b056825419e22c", "private_key": "(27,55)", "public_key": "(3,55)"}
+{"MMID": "a5ea2fc88053e117", "private_key": "(7, 22)", "public_key": "(3, 22)"}

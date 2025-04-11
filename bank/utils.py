@@ -2,6 +2,8 @@ import socket
 import hashlib
 import json
 import time
+import re
+import random
 
 def get_shaid(raw_values):
     h = hashlib.sha256()
@@ -56,11 +58,11 @@ def decrypt_hashdata(hash_data):
  
     return hash_data
 
-def validate_user(user_data, users):
+def validate_user(user_data, users, private_key):
     for idx, user in enumerate(users):
         user = json.loads(user)
         if user["MMID"] == user_data["MMID"]:
-            if user["PIN"] == user_data["PIN"]:
+            if decrypt_rsa(user["PIN"],private_key) == user_data["PIN"]:
                 if float(user_data["Amount"]) <= float(user["Amount in Account"]):
                     user["Amount in Account"] = str(float(user["Amount in Account"]) - float(user_data["Amount"]))
                     users[idx] = json.dumps(user)
@@ -133,3 +135,45 @@ def decrypt(key, ciphertext):
         string += chr(ord(ciphertext[i]) ^ ord(key[i]))
     return string
 
+def encrypt_rsa(message, public_key):
+    hex_letters = ["A", "B", "C", "D", "E", "F"]
+    e, N = public_key
+    cipher = ""
+    for digit in message:
+        digit = ord(digit)-48
+        temp = pow(digit, e, N)
+        cipher += str(temp)+random.sample(hex_letters, 1)[0]
+    return cipher[:-1]
+
+def decrypt_rsa(ciphertext, private_key):
+    private_key = tuple(map(int, private_key.replace('(','').replace(')','').split(',')))
+    d, N = private_key
+    plain_text = ""
+    ciphertext = re.split("[A-F]", ciphertext)
+    for digit in ciphertext:
+        digit = int(digit)
+        temp = pow(digit, d, N)
+        plain_text += chr(temp+48)
+    return plain_text
+
+
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def modinv(a, m):
+    m0, x0, x1 = m, 0, 1
+    while a > 1:
+        q = a // m
+        a, m = m, a % m
+        x0, x1 = x1 - q * x0, x0
+    return x1 % m0
+def generate_rsa_keys(p,q):
+    N = p * q
+    phi = (p - 1) * (q - 1)
+    e = 3
+    while gcd(e, phi) != 1:
+        e += 2
+    d = modinv(e, phi)
+    return (e, N), (d, N), (p, q)

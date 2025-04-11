@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState([]);
+    function convert_to_date(timestamp){
+        const date = new Date(Math.round(1000*timestamp))
+        return date.toDateString() + " " + date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
     useEffect(() => {
         const fetchTransactions = async () => {
             const data = {
@@ -37,6 +41,7 @@ export default function Transactions() {
     {transactions.length > 0 ? (
         <div className="flex">
             {transactions.map((transaction, index) => (
+                
                 <div key={index} className="bg-slate-700 p-4 rounded-xl m-4 text-white w-[20vw]">
                     <h1 className="font-bold py-4 w-[60%]">Current Hash: </h1>
                     <div className="bg-slate-200 py-2 px-3 rounded-xl overflow-auto">
@@ -48,7 +53,8 @@ export default function Transactions() {
                     </div>
                     <h1 className="font-bold py-4 w-[60%]">Timestamp:</h1>
                     <div className="bg-slate-200 py-2 px-3 rounded-xl overflow-auto">
-                        <h1 className="font-bold text-black">{transaction["timestamp"]}</h1>   
+                    
+                        <h1 className="font-bold text-black">{convert_to_date(transaction["timestamp"])}</h1>   
                     </div>
                 </div>
             ))}

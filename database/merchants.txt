@@ -1,3 +1,4 @@
-{"name": "hello", "password": "password", "IFSC Code": "SBIIN000301", "Amount in Account": "25.00","MID": "48ecc01881aed9d2"}
+{"name": "hello", "password": "password", "IFSC Code": "SBIIN000301", "Amount in Account": "27.0", "MID": "48ecc01881aed9d2"}
 {"name": "bhaskar", "password": "password@123", "IFSC Code": "SBIIN000302", "Amount in Account": "100.00", "MID": "818fbf78a465b7aa"}
 {"name": "John", "password": "thisisapassword", "IFSC Code": "ICICI000202", "Amount in Account": "1408.0", "MID": "31788189cb7b5cbe"}
+{"name": "Joseph", "password": "mypassword234", "IFSC Code": "HDFCI000101", "Amount in Account": "2000.00", "MID": "e11ec0bad658b7e6"}
