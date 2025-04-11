@@ -18,7 +18,7 @@ def index():
         data = request.json
             
         s = socket.socket()		
-        s.connect(('127.0.0.1', port)) 
+        s.connect(('172.20.10.6', port)) 
         s.send(json.dumps(data).encode())
         resp = s.recv(4096).decode()
         print(resp)

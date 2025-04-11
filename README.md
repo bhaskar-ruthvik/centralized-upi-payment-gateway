@@ -1,19 +1,15 @@
-# Project Title
+# Central UPI Payment Gateway
 
-A brief description of what this project does and who it's for.
+This is the term project for BITS F463: Cryptography. It is a simplified implementation of a centralized UPI payment gateway which involves utilising lightweight cryptography in order to speed up essential processes like transactions, using socket programming to facilitate communication between entities, utilising quantum cryptography to expose the vulnerabilities involved in the process and a Front-end React client to perform the various operations.
 
-## Table of Contents
+## Features 
 
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Register Merchant](#overview)
+- [Register User](#features)
+- [Make Payments](#installation)
+- [View Transactions (Centralized)](#usage)
+- [Generate QR Code](#contributing)
 
-## Overview
-
-Provide a detailed overview of the project, its purpose, and key objectives.
 
 ## Operation IDs
 
@@ -25,45 +21,41 @@ Provide a detailed overview of the project, its purpose, and key objectives.
 - 6: QR Code Generation
 
 ## Installation
-
-1. Clone the repository:
+1. Download the `.zip` file and extract the contents
+2. Ensure that npm package manager and python are installed on the system
+3. Next run the following commands:
     ```bash
-    git clone https://github.com/your-username/your-repo.git
+    pip install qiskit qiskit-aer qrcode
     ```
-2. Navigate to the project directory:
+4. Install dependencies for frontend client:
     ```bash
-    cd your-repo
-    ```
-3. Install dependencies:
-    ```bash
+    cd client
     npm install
+    npm start
     ```
-
-## Usage
-
-Explain how to use the project. Include code examples if necessary:
-```bash
-npm start
-```
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-1. Fork the repository.
-2. Create a new branch:
+5. Create virtual environment for the proxy server and install the required libraries
     ```bash
-    git checkout -b feature-name
+    cd proxy_server
+    python -m venv env
+    ./env/Scripts/activate 
+    pip install -r requirements.txt
+    python app.py
     ```
-3. Commit your changes:
+6. On the bank server laptop, run:
     ```bash
-    git commit -m "Add feature-name"
+    python bank/bank_server.py
     ```
-4. Push to the branch:
+7. On the user and merchant laptops, run:
     ```bash
-    git push origin feature-name
+    python upi_machine/upi_server.py
     ```
-5. Open a pull request.
+8. Now you can perform the operations enabled by the UPI payments gateway
 
-## License
+## List of Team Members
+- *Bhaskar Ruthvik Bikkina* - *2021A7PS1345H*
+- *Neel Saket Racherla* - *2021AAPS1523H*
+- *Abhinav Satish* - *2021AAPS1525H*
+- *Harikrishna V* - *2021A3PS1662H*
+- *Sidharth Saxena* - *2021B4A72488H*
 
-This project is licensed under the [MIT License](LICENSE).
+    

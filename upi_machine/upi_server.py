@@ -25,7 +25,7 @@ while True:
     print(resp)
     if resp["id"] == "5":
         t = socket.socket()
-        t.connect(('127.0.0.1', bank_port))
+        t.connect(('172.20.10.6', bank_port))
         # Decrypt the VMID and send the hashed user details to the bank server
         mid = speck_decrypt(resp["data"]["VMID"],round_keys)
         print("Decrypted MID: ", mid)
@@ -47,7 +47,7 @@ while True:
         c.send(json.dumps({"id": "6","data": { "status": "QR Generated Successfully", "file_name": file_name}}).encode())
     elif resp["id"]=="1"  or resp["id"]=="3":
         t = socket.socket()
-        t.connect(('127.0.0.1', bank_port))
+        t.connect(('172.20.10.6', bank_port))
         t.send(json.dumps(resp).encode())
         resp = t.recv(1024).decode()
         resp = json.loads(resp)

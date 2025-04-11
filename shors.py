@@ -13,7 +13,7 @@ def gcd(a, b):
         a, b = b, a % b
     return a
 
-def modinv(a, m):
+def modinverse(a, m):
     m0, x0, x1 = m, 0, 1
     while a > 1:
         q = a // m
@@ -27,7 +27,7 @@ def generate_rsa_keys(p,q):
     e = 3
     while gcd(e, phi) != 1:
         e += 2
-    d = modinv(e, phi)
+    d = modinverse(e, phi)
     return (e, N), (d, N), (p, q)
 
 def encrypt(message, public_key):
@@ -50,7 +50,6 @@ def decrypt(ciphertext, private_key):
         plain_text += chr(temp+48)
     return plain_text
 
-'''shors'''
 def quantum_period_finding(a: int, N: int) -> int:
     n = math.ceil(math.log2(N))
     m = 2 * n
@@ -114,23 +113,21 @@ if __name__ == "__main__":
         while True:
             try:
                 public_key = key["public_key"]
-                private_key = key["private_key"]
                 public_key = tuple(map(int, public_key.replace('(','').replace(')','').split(',')))
-                private_key = tuple(map(int, private_key.replace('(','').replace(')','').split(',')))
                 p, q = factor_rsa_modulus(public_key[1])
                 print(f"Quantum Attack Successful: N = {p} × {q}")
                 phi = (p - 1)*(q - 1)
                 e = public_key[0]
-                d = modinv(e, phi)
-                decrypted_pin = decrypt(pin,private_key)
+                d = modinverse(e, phi)
+                decrypted_pin = decrypt(pin,(d, public_key[1]))
                 #print(f"Decrypted PIN using recovered private key: {decrypted_pin}")
                 pins.append(decrypted_pin)
-                decrypted_uid = decrypt(uid, private_key)
+                decrypted_uid = decrypt(uid, (d,public_key[1]))
                 uids.append(decrypted_uid)
                 #print(f"Decrypted UID using recovered private key: {decrypted_uid}")
                 break
             except Exception as e:
-                print("Quantum attack failed:",e)
+                print("Quantum attack failed:",e)
                 continue
     print("Decrypted PINs: ", pins)
     print("Decrypted UIDs: ", uids)
